@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BÀI 4: SƠ LƯỢC VỀ BẢNG TUẦN HOÀN CÁC NGUYÊN TỐ HÓA HỌC (phần 4)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4; /* Nền xanh nhạt thân thiện */
+            color: #1f2937;
+            font-size: 1.25rem; /* Kích thước chữ lớn hơn (20px) */
+            line-height: 1.75;
+        }
+        
+        /* Giao diện full màn hình, loại bỏ giới hạn max-width */
+        .container-fluid {
+            width: 100%;
+            padding: 2rem 4rem;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 { font-size: 2.5rem; color: #1d4ed8; }
+        h2 { font-size: 2rem; color: #1d4ed8; margin-top: 2rem; }
+        h3 { font-size: 1.75rem; color: #2563eb; }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 2px solid #d1d5db;
+        }
+        
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 1rem;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        th {
+            background-color: #dbeafe;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: #1e3a8a;
+        }
+
+        /* Tùy chỉnh thẻ select để giống ô trống và to rõ */
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #9ca3af;
+            border-radius: 0.5rem;
+            background-color: #f8fafc;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #334155;
+            font-weight: 500;
+        }
+
+        select:focus, select:hover {
+            outline: none;
+            border-color: #2563eb;
+            background-color: #eff6ff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .blank select {
+            width: auto;
+            min-width: 150px;
+            display: inline-block;
+            margin: 0 0.5rem;
+            color: #b91c1c; /* Chữ màu đỏ cho nổi bật khi chọn */
+            font-weight: bold;
+        }
+
+        .drag-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1.5rem;
+            background-color: #f1f5f9;
+            border: 2px dashed #64748b;
+            border-radius: 0.5rem;
+            min-height: 100px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .draggable-item {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            font-size: 1.5rem;
+            cursor: grab;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            user-select: none;
+            transition: transform 0.2s;
+        }
+
+        .draggable-item:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+
+        .dropzone {
+            min-height: 80px;
+            border: 3px dashed #94a3b8;
+            background-color: #f8fafc;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+
+        .dropzone.drag-over {
+            background-color: #dcfce7;
+            border-color: #22c55e;
+            transform: scale(1.02);
+        }
+
+        /* Đảm bảo giao diện tốt trên mobile */
+        @media (max-width: 768px) {
+            .container-fluid { padding: 1rem; }
+            body { font-size: 1.1rem; }
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.5rem; }
+            select { font-size: 1rem; padding: 0.5rem; }
+            .draggable-item { font-size: 1.25rem; padding: 0.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="font-bold text-center mb-8 uppercase">Bài 4: Sơ lược về bảng tuần hoàn các nguyên tố hóa học (Phần 4)</h1>
+        
+        <h2 class="font-bold mb-6">III. VỊ TRÍ CÁC NHÓM KIM LOẠI, PHI KIM, KHÍ HIẾM TRONG BẢNG TUẦN HOÀN</h2>
+        
+        <h3 class="font-semibold mb-4">2. Phi kim</h3>
+        
+        <div class="mb-8 bg-blue-50 p-6 rounded-xl border-2 border-blue-200 shadow-sm">
+            <p class="font-bold mb-4 text-xl">Vị trí của phi kim trong bảng tuần hoàn:</p>
+            <ul class="list-disc pl-8 space-y-4">
+                <li>Hầu hết các nguyên tố thuộc nhóm: 
+                    <span class="blank">
+                        <select>
+                            <option value="">-- Chọn nhóm --</option>
+                            <option value="VIIA">VIIA</option>
+                            <option value="VIA">VIA</option>
+                            <option value="VA">VA</option>
+                            <option value="VIIA, VIA, VA">VIIA, VIA, VA</option>
+                        </select>
+                    </span>, 
+                    <span class="blank">
+                        <select>
+                            <option value="">-- Chọn nhóm --</option>
+                            <option value="VIIIA">VIIIA</option>
+                            <option value="IVA">IVA</option>
+                            <option value="IIIA">IIIA</option>
+                            <option value="IA">IA</option>
+                        </select>
+                    </span>
+                </li>
+                <li>Một phần nhóm 
+                    <span class="blank">
+                        <select>
+                            <option value="">-- Chọn nhóm --</option>
+                            <option value="IVA">IVA</option>
+                            <option value="VA">VA</option>
+                            <option value="VIA">VIA</option>
+                            <option value="IVA, VA, VIA">IVA, VA, VIA</option>
+                        </select>
+                    </span>
+                </li>
+                <li>Nguyên tố H ở nhóm 
+                    <span class="blank">
+                        <select>
+                            <option value="">-- Chọn nhóm --</option>
+                            <option value="IA">IA</option>
+                            <option value="IIA">IIA</option>
+                            <option value="VIIA">VIIA</option>
+                            <option value="VIIIA">VIIIA</option>
+                        </select>
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+        <p class="font-bold mb-4 text-xl">Ví dụ một số phi kim thường gặp:</p>
+        <div class="overflow-x-auto shadow-md rounded-lg mb-10">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="w-1/5">Đặc điểm</th>
+                        <th class="w-1/5 text-red-600">Oxygen</th>
+                        <th class="w-1/5 text-orange-600">Bromine</th>
+                        <th class="w-1/5 text-green-600">Chlorine</th>
+                        <th class="w-1/5 text-purple-600">Phosphorus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-bold bg-gray-50 text-left">Kí hiệu</td>
+                        <td>
+                            <select><option value="">-- Kí hiệu --</option><option value="O">O</option><option value="Br">Br</option><option value="Cl">Cl</option><option value="P">P</option><option value="C">C</option></select>
+                        </td>
+                        <td>
+                            <select><option value="">-- Kí hiệu --</option><option value="O">O</option><option value="Br">Br</option><option value="Cl">Cl</option><option value="P">P</option><option value="S">S</option></select>
+                        </td>
+                        <td>
+                            <select><option value="">-- Kí hiệu --</option><option value="O">O</option><option value="Br">Br</option><option value="Cl">Cl</option><option value="P">P</option><option value="N">N</option></select>
+                        </td>
+                        <td>
+                            <select><option value="">-- Kí hiệu --</option><option value="O">O</option><option value="Br">Br</option><option value="Cl">Cl</option><option value="P">P</option><option value="Si">Si</option></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-gray-50 text-left">Ô</td>
+                        <td><select><option value="">-- Số ô --</option><option value="8">8</option><option value="15">15</option><option value="17">17</option><option value="35">35</option></select></td>
+                        <td><select><option value="">-- Số ô --</option><option value="8">8</option><option value="15">15</option><option value="17">17</option><option value="35">35</option></select></td>
+                        <td><select><option value="">-- Số ô --</option><option value="8">8</option><option value="15">15</option><option value="17">17</option><option value="35">35</option></select></td>
+                        <td><select><option value="">-- Số ô --</option><option value="8">8</option><option value="15">15</option><option value="17">17</option><option value="35">35</option></select></td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-gray-50 text-left">Chu kỳ</td>
+                        <td><select><option value="">-- Chu kỳ --</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></td>
+                        <td><select><option value="">-- Chu kỳ --</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></td>
+                        <td><select><option value="">-- Chu kỳ --</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></td>
+                        <td><select><option value="">-- Chu kỳ --</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-gray-50 text-left">Nhóm</td>
+                        <td><select><option value="">-- Nhóm --</option><option value="VA">VA</option><option value="VIA">VIA</option><option value="VIIA">VIIA</option></select></td>
+                        <td><select><option value="">-- Nhóm --</option><option value="VA">VA</option><option value="VIA">VIA</option><option value="VIIA">VIIA</option></select></td>
+                        <td><select><option value="">-- Nhóm --</option><option value="VA">VA</option><option value="VIA">VIA</option><option value="VIIA">VIIA</option></select></td>
+                        <td><select><option value="">-- Nhóm --</option><option value="VA">VA</option><option value="VIA">VIA</option><option value="VIIA">VIIA</option></select></td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-gray-50 text-left">Màu sắc</td>
+                        <td><select><option value="">-- Màu --</option><option value="Không màu">Không màu</option><option value="Đỏ nâu">Đỏ nâu</option><option value="Vàng lục">Vàng lục</option><option value="Đỏ/Trắng">Đỏ/Trắng</option></select></td>
+                        <td><select><option value="">-- Màu --</option><option value="Không màu">Không màu</option><option value="Đỏ nâu">Đỏ nâu</option><option value="Vàng lục">Vàng lục</option><option value="Đỏ/Trắng">Đỏ/Trắng</option></select></td>
+                        <td><select><option value="">-- Màu --</option><option value="Không màu">Không màu</option><option value="Đỏ nâu">Đỏ nâu</option><option value="Vàng lục">Vàng lục</option><option value="Đỏ/Trắng">Đỏ/Trắng</option></select></td>
+                        <td><select><option value="">-- Màu --</option><option value="Không màu">Không màu</option><option value="Đỏ nâu">Đỏ nâu</option><option value="Vàng lục">Vàng lục</option><option value="Đỏ/Trắng">Đỏ/Trắng</option></select></td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-gray-50 text-left">Trạng thái</td>
+                        <td><select><option value="">-- Trạng thái --</option><option value="Rắn">Rắn</option><option value="Lỏng">Lỏng</option><option value="Khí">Khí</option></select></td>
+                        <td><select><option value="">-- Trạng thái --</option><option value="Rắn">Rắn</option><option value="Lỏng">Lỏng</option><option value="Khí">Khí</option></select></td>
+                        <td><select><option value="">-- Trạng thái --</option><option value="Rắn">Rắn</option><option value="Lỏng">Lỏng</option><option value="Khí">Khí</option></select></td>
+                        <td><select><option value="">-- Trạng thái --</option><option value="Rắn">Rắn</option><option value="Lỏng">Lỏng</option><option value="Khí">Khí</option></select></td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-gray-50 text-left">Hình ảnh</td>
+                        <td><select><option value="">-- Chọn mô tả --</option><option value="Chất khí không màu">Chất khí không màu</option><option value="Chất lỏng bốc khói">Chất lỏng bốc khói</option><option value="Khí độc màu vàng">Khí độc màu vàng</option><option value="Chất rắn dạng bột/sáp">Chất rắn dạng bột/sáp</option></select></td>
+                        <td><select><option value="">-- Chọn mô tả --</option><option value="Chất khí không màu">Chất khí không màu</option><option value="Chất lỏng bốc khói nâu">Chất lỏng bốc khói nâu</option><option value="Khí độc màu vàng">Khí độc màu vàng</option><option value="Chất rắn dạng bột/sáp">Chất rắn dạng bột/sáp</option></select></td>
+                        <td><select><option value="">-- Chọn mô tả --</option><option value="Chất khí không màu">Chất khí không màu</option><option value="Chất lỏng bốc khói nâu">Chất lỏng bốc khói nâu</option><option value="Khí độc màu vàng lục">Khí độc màu vàng lục</option><option value="Chất rắn dạng bột/sáp">Chất rắn dạng bột/sáp</option></select></td>
+                        <td><select><option value="">-- Chọn mô tả --</option><option value="Chất khí không màu">Chất khí không màu</option><option value="Chất lỏng bốc khói nâu">Chất lỏng bốc khói nâu</option><option value="Khí độc màu vàng lục">Khí độc màu vàng lục</option><option value="Chất rắn màu đỏ/trắng">Chất rắn màu đỏ/trắng</option></select></td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-gray-50 text-left">Ứng dụng</td>
+                        <td><select><option value="">-- Ứng dụng --</option><option value="Hỗ trợ hô hấp, sự cháy">Hỗ trợ hô hấp, sự cháy</option><option value="Sản xuất dược phẩm">Sản xuất dược phẩm</option><option value="Khử trùng nước">Khử trùng nước</option><option value="Sản xuất diêm">Sản xuất diêm</option></select></td>
+                        <td><select><option value="">-- Ứng dụng --</option><option value="Hỗ trợ hô hấp, sự cháy">Hỗ trợ hô hấp, sự cháy</option><option value="Sản xuất dược phẩm, nhiếp ảnh">Sản xuất dược phẩm, nhiếp ảnh</option><option value="Khử trùng nước">Khử trùng nước</option><option value="Sản xuất diêm">Sản xuất diêm</option></select></td>
+                        <td><select><option value="">-- Ứng dụng --</option><option value="Hỗ trợ hô hấp, sự cháy">Hỗ trợ hô hấp, sự cháy</option><option value="Sản xuất dược phẩm, nhiếp ảnh">Sản xuất dược phẩm, nhiếp ảnh</option><option value="Khử trùng nước sinh hoạt">Khử trùng nước sinh hoạt</option><option value="Sản xuất diêm">Sản xuất diêm</option></select></td>
+                        <td><select><option value="">-- Ứng dụng --</option><option value="Hỗ trợ hô hấp, sự cháy">Hỗ trợ hô hấp, sự cháy</option><option value="Sản xuất dược phẩm, nhiếp ảnh">Sản xuất dược phẩm, nhiếp ảnh</option><option value="Khử trùng nước sinh hoạt">Khử trùng nước sinh hoạt</option><option value="Sản xuất diêm, thuốc trừ sâu">Sản xuất diêm, thuốc trừ sâu</option></select></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-12 mb-12 border-t-4 border-dashed border-blue-300 pt-8">
+            <h2 class="text-3xl font-bold mb-4 bg-green-100 text-green-800 inline-block px-6 py-3 rounded-xl border-2 border-green-300 shadow">LUYỆN TẬP (KÉO THẢ)</h2>
+            <p class="mb-6 font-semibold">Cho các nguyên tố sau: Na, Fe, S, P, Ca, C, Si, Mg, Al, Cu.</p>
+            <p class="mb-6 text-red-600 font-bold">👉 Yêu cầu: Hãy KÉO các nguyên tố là PHI KIM trong dãy trên và THẢ vào các ô trống trên đầu bảng, sau đó chọn vị trí của chúng trong BTH.</p>
+            
+            <!-- Ngân hàng từ khóa để kéo -->
+            <div class="drag-bank mb-8" id="drag-bank" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div class="draggable-item" draggable="true" ondragstart="drag(event)" id="elem-Na">Na</div>
+                <div class="draggable-item" draggable="true" ondragstart="drag(event)" id="elem-Fe">Fe</div>
+                <div class="draggable-item" draggable="true" ondragstart="drag(event)" id="elem-S">S</div>
+                <div class="draggable-item" draggable="true" ondragstart="drag(event)" id="elem-P">P</div>
+                <div class="draggable-item" draggable="true" ondragstart="drag(event)" id="elem-Ca">Ca</div>
+                <div class="draggable-item" draggable="true" ondragstart="drag(event)" id="elem-C">C</div>
+                <div class="draggable-item" draggable="true" ondragstart="drag(event)" id="elem-Si">Si</div>
+                <div class="draggable-item" draggable="true" ondragstart="drag(event)" id="elem-Mg">Mg</div>
+                <div class="draggable-item" draggable="true" ondragstart="drag(event)" id="elem-Al">Al</div>
+                <div class="draggable-item" draggable="true" ondragstart="drag(event)" id="elem-Cu">Cu</div>
+            </div>
+
+            <div class="overflow-x-auto shadow-lg rounded-xl">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-1/5 bg-green-50">Kéo thả Phi kim ⬇️</th>
+                            <th class="w-1/5 bg-yellow-50"><div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div></th>
+                            <th class="w-1/5 bg-yellow-50"><div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div></th>
+                            <th class="w-1/5 bg-yellow-50"><div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div></th>
+                            <th class="w-1/5 bg-yellow-50"><div class="dropzone" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold bg-gray-50 text-left align-top">
+                                <div class="space-y-6 mt-2">
+                                    <div class="py-2">Kí hiệu</div>
+                                    <div class="py-2">Ô</div>
+                                    <div class="py-2">Chu kỳ</div>
+                                    <div class="py-2">Nhóm</div>
+                                </div>
+                            </td>
+                            <td class="align-top">
+                                <div class="space-y-4">
+                                    <select><option value="">-- Kí hiệu --</option><option value="C">C</option><option value="S">S</option><option value="P">P</option><option value="Si">Si</option></select>
+                                    <select><option value="">-- Ô --</option><option value="6">6</option><option value="14">14</option><option value="15">15</option><option value="16">16</option></select>
+                                    <select><option value="">-- Chu kỳ --</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+                                    <select><option value="">-- Nhóm --</option><option value="IVA">IVA</option><option value="VA">VA</option><option value="VIA">VIA</option></select>
+                                </div>
+                            </td>
+                            <td class="align-top">
+                                <div class="space-y-4">
+                                    <select><option value="">-- Kí hiệu --</option><option value="C">C</option><option value="S">S</option><option value="P">P</option><option value="Si">Si</option></select>
+                                    <select><option value="">-- Ô --</option><option value="6">6</option><option value="14">14</option><option value="15">15</option><option value="16">16</option></select>
+                                    <select><option value="">-- Chu kỳ --</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+                                    <select><option value="">-- Nhóm --</option><option value="IVA">IVA</option><option value="VA">VA</option><option value="VIA">VIA</option></select>
+                                </div>
+                            </td>
+                            <td class="align-top">
+                                <div class="space-y-4">
+                                    <select><option value="">-- Kí hiệu --</option><option value="C">C</option><option value="S">S</option><option value="P">P</option><option value="Si">Si</option></select>
+                                    <select><option value="">-- Ô --</option><option value="6">6</option><option value="14">14</option><option value="15">15</option><option value="16">16</option></select>
+                                    <select><option value="">-- Chu kỳ --</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+                                    <select><option value="">-- Nhóm --</option><option value="IVA">IVA</option><option value="VA">VA</option><option value="VIA">VIA</option></select>
+                                </div>
+                            </td>
+                            <td class="align-top">
+                                <div class="space-y-4">
+                                    <select><option value="">-- Kí hiệu --</option><option value="C">C</option><option value="S">S</option><option value="P">P</option><option value="Si">Si</option></select>
+                                    <select><option value="">-- Ô --</option><option value="6">6</option><option value="14">14</option><option value="15">15</option><option value="16">16</option></select>
+                                    <select><option value="">-- Chu kỳ --</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+                                    <select><option value="">-- Nhóm --</option><option value="IVA">IVA</option><option value="VA">VA</option><option value="VIA">VIA</option></select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold bg-gray-50 text-left">Ứng dụng chính</td>
+                            <td>
+                                <select class="h-full">
+                                    <option value="">-- Chọn ứng dụng --</option>
+                                    <option value="Lõi bút chì, kim cương">Lõi bút chì, kim cương</option>
+                                    <option value="Sản xuất linh kiện điện tử">Sản xuất linh kiện điện tử</option>
+                                    <option value="Sản xuất diêm, phân bón">Sản xuất diêm, phân bón</option>
+                                    <option value="Sản xuất acid sulfuric">Sản xuất acid sulfuric</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="h-full">
+                                    <option value="">-- Chọn ứng dụng --</option>
+                                    <option value="Lõi bút chì, kim cương">Lõi bút chì, kim cương</option>
+                                    <option value="Sản xuất linh kiện điện tử">Sản xuất linh kiện điện tử</option>
+                                    <option value="Sản xuất diêm, phân bón">Sản xuất diêm, phân bón</option>
+                                    <option value="Sản xuất acid sulfuric">Sản xuất acid sulfuric</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="h-full">
+                                    <option value="">-- Chọn ứng dụng --</option>
+                                    <option value="Lõi bút chì, kim cương">Lõi bút chì, kim cương</option>
+                                    <option value="Sản xuất linh kiện điện tử">Sản xuất linh kiện điện tử</option>
+                                    <option value="Sản xuất diêm, phân bón">Sản xuất diêm, phân bón</option>
+                                    <option value="Sản xuất acid sulfuric">Sản xuất acid sulfuric</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="h-full">
+                                    <option value="">-- Chọn ứng dụng --</option>
+                                    <option value="Lõi bút chì, kim cương">Lõi bút chì, kim cương</option>
+                                    <option value="Sản xuất linh kiện điện tử">Sản xuất linh kiện điện tử</option>
+                                    <option value="Sản xuất diêm, phân bón">Sản xuất diêm, phân bón</option>
+                                    <option value="Sản xuất acid sulfuric">Sản xuất acid sulfuric</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-12 border-t-4 border-dashed border-blue-300 pt-8">
+            <h2 class="text-3xl font-bold mb-6 bg-yellow-200 text-yellow-900 inline-block px-6 py-3 rounded-xl shadow border-2 border-yellow-400">VẬN DỤNG – MỞ RỘNG</h2>
+            
+            <h3 class="font-bold mb-4">I. VẬN DỤNG</h3>
+            <div class="overflow-x-auto mb-10 shadow-lg rounded-xl">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-1/2 bg-yellow-100 text-2xl py-4">Đồ vật</th>
+                            <th class="w-1/2 bg-yellow-100 text-2xl py-4">Phi kim liên quan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select>
+                                    <option value="">-- Chọn đồ vật --</option>
+                                    <option value="Lõi bút chì">Lõi bút chì</option>
+                                    <option value="Que diêm">Que diêm</option>
+                                    <option value="Nước tẩy rửa Javel">Nước tẩy rửa Javel</option>
+                                    <option value="Cát, thủy tinh">Cát, thủy tinh</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select>
+                                    <option value="">-- Chọn phi kim tương ứng --</option>
+                                    <option value="Carbon (C)">Carbon (C)</option>
+                                    <option value="Phosphorus (P)">Phosphorus (P)</option>
+                                    <option value="Chlorine (Cl)">Chlorine (Cl)</option>
+                                    <option value="Silicon (Si)">Silicon (Si)</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select>
+                                    <option value="">-- Chọn đồ vật --</option>
+                                    <option value="Lõi bút chì">Lõi bút chì</option>
+                                    <option value="Que diêm">Que diêm</option>
+                                    <option value="Nước tẩy rửa Javel">Nước tẩy rửa Javel</option>
+                                    <option value="Cát, thủy tinh">Cát, thủy tinh</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select>
+                                    <option value="">-- Chọn phi kim tương ứng --</option>
+                                    <option value="Carbon (C)">Carbon (C)</option>
+                                    <option value="Phosphorus (P)">Phosphorus (P)</option>
+                                    <option value="Chlorine (Cl)">Chlorine (Cl)</option>
+                                    <option value="Silicon (Si)">Silicon (Si)</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="font-bold mb-6">II. MỞ RỘNG (Chọn đáp án phân tích):</h3>
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                <!-- Nhóm 1 và 2 -->
+                <div class="bg-indigo-50 p-6 rounded-2xl border-2 border-indigo-200 shadow-md">
+                    <h4 class="font-bold text-2xl mb-4 text-indigo-800 border-b-2 border-indigo-200 pb-3">Nhóm 1 và 2: Silicon và Thiết bị điện tử</h4>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block mb-2 font-bold text-gray-800">1. Silicon có ứng dụng gì trong sản xuất điện tử?</label>
+                            <select class="border-indigo-300 focus:border-indigo-600 bg-white">
+                                <option value="">-- Phân tích ứng dụng --</option>
+                                <option value="1">Làm chất bán dẫn để sản xuất vi mạch, chip máy tính</option>
+                                <option value="2">Làm vỏ bảo vệ ngoài cho điện thoại</option>
+                                <option value="3">Làm màn hình hiển thị màu sắc</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block mb-2 font-bold text-gray-800">2. Việc khai thác và sản xuất ảnh hưởng thế nào đến môi trường?</label>
+                            <select class="border-indigo-300 focus:border-indigo-600 bg-white">
+                                <option value="">-- Đánh giá ảnh hưởng --</option>
+                                <option value="1">Gây ô nhiễm tiếng ồn ở khu dân cư</option>
+                                <option value="2">Tiêu thụ nhiều năng lượng, tạo rác thải điện tử khó phân hủy</option>
+                                <option value="3">Gây thủng tầng ozone trực tiếp</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block mb-2 font-bold text-gray-800">3. Biện pháp hạn chế?</label>
+                            <select class="border-indigo-300 focus:border-indigo-600 bg-white">
+                                <option value="">-- Chọn giải pháp --</option>
+                                <option value="1">Ngừng hoàn toàn việc sử dụng thiết bị điện tử</option>
+                                <option value="2">Đốt bỏ các rác thải điện tử cũ</option>
+                                <option value="3">Tái chế rác thải điện tử, sử dụng công nghệ sản xuất sạch</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nhóm 3 và 4 -->
+                <div class="bg-pink-50 p-6 rounded-2xl border-2 border-pink-200 shadow-md">
+                    <h4 class="font-bold text-2xl mb-4 text-pink-800 border-b-2 border-pink-200 pb-3">Nhóm 3 và 4: Internet và Khí CO2</h4>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block mb-2 font-bold text-gray-800">1. Tại sao lướt Facebook/Tiktok lại sinh ra CO2?</label>
+                            <select class="border-pink-300 focus:border-pink-600 bg-white">
+                                <option value="">-- Giải thích nguyên nhân --</option>
+                                <option value="1">Do màn hình điện thoại phát ra khí CO2</option>
+                                <option value="2">Các máy chủ (Data Center) tiêu thụ lượng điện khổng lồ thải CO2</option>
+                                <option value="3">Do sóng wifi biến đổi O2 thành CO2 trong không khí</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block mb-2 font-bold text-gray-800">2. Ảnh hưởng môi trường như thế nào?</label>
+                            <select class="border-pink-300 focus:border-pink-600 bg-white">
+                                <option value="">-- Đánh giá ảnh hưởng --</option>
+                                <option value="1">Tăng phát thải khí nhà kính, góp phần gây biến đổi khí hậu</option>
+                                <option value="2">Gây ô nhiễm nguồn nước ngầm</option>
+                                <option value="3">Làm xói mòn đất đai</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block mb-2 font-bold text-gray-800">3. Biện pháp hạn chế?</label>
+                            <select class="border-pink-300 focus:border-pink-600 bg-white">
+                                <option value="">-- Chọn giải pháp --</option>
+                                <option value="1">Chuyển sang dùng năng lượng tái tạo cho máy chủ, tối ưu sử dụng mạng</option>
+                                <option value="2">Cấm sử dụng mạng xã hội trên toàn cầu</option>
+                                <option value="3">Chỉ lướt web vào ban đêm để tiết kiệm điện</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-12 text-center pb-8">
+            <button id="submitBtn" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-4 px-10 text-2xl rounded-full shadow-xl transition transform hover:scale-105">Nộp Bài Đánh Giá</button>
+        </div>
+    </div>
+
+    <script>
+        // Xử lý sự kiện khi bắt đầu kéo
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+            ev.target.style.opacity = '0.5';
+        }
+
+        // Cho phép thả phần tử
+        function allowDrop(ev) {
+            ev.preventDefault();
+            // Thêm hiệu ứng hover
+            if (ev.target.classList.contains('dropzone')) {
+                ev.target.classList.add('drag-over');
+            }
+        }
+
+        // Xóa hiệu ứng hover khi kéo ra khỏi vùng
+        function dragLeave(ev) {
+            if (ev.target.classList.contains('dropzone')) {
+                ev.target.classList.remove('drag-over');
+            }
+        }
+
+        // Xử lý khi thả phần tử
+        function drop(ev) {
+            ev.preventDefault();
+            
+            // Xóa hiệu ứng
+            if (ev.target.classList.contains('dropzone')) {
+                ev.target.classList.remove('drag-over');
+            } else if (ev.target.closest('.dropzone')) {
+                ev.target.closest('.dropzone').classList.remove('drag-over');
+            }
+
+            var data = ev.dataTransfer.getData("text");
+            var draggedElement = document.getElementById(data);
+            
+            if (draggedElement) {
+                draggedElement.style.opacity = '1';
+                
+                // Đảm bảo chỉ thả vào dropzone hoặc bank
+                var targetZone = ev.target;
+                
+                // Nếu thả vào một element đang nằm trong dropzone, lấy thẻ cha là dropzone
+                if (!targetZone.classList.contains('dropzone') && !targetZone.classList.contains('drag-bank')) {
+                    targetZone = targetZone.closest('.dropzone') || targetZone.closest('.drag-bank');
+                }
+
+                if (targetZone && (targetZone.classList.contains('dropzone') || targetZone.classList.contains('drag-bank'))) {
+                    targetZone.appendChild(draggedElement);
+                }
+            }
+        }
+
+        // Reset opacity when drag ends unexpectedly
+        document.addEventListener('dragend', function(ev) {
+            if (ev.target.classList.contains('draggable-item')) {
+                ev.target.style.opacity = '1';
+            }
+        });
+
+        // Xử lý nút nộp bài
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            // Thay vì dùng alert, tạo hộp thoại modal hoặc message đơn giản trên console
+            const modal = document.createElement('div');
+            modal.innerHTML = `
+                <div style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 50;">
+                    <div style="background: white; padding: 2rem; border-radius: 1rem; text-align: center; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+                        <h2 style="font-size: 2rem; color: #16a34a; margin-bottom: 1rem; font-weight: bold;">Đã ghi nhận!</h2>
+                        <p style="font-size: 1.25rem; margin-bottom: 2rem;">Hệ thống đã lưu lại toàn bộ các lựa chọn và thao tác kéo thả của bạn.</p>
+                        <button onclick="this.parentElement.parentElement.remove()" style="background: #2563eb; color: white; padding: 0.75rem 2rem; font-size: 1.25rem; border-radius: 0.5rem; font-weight: bold; cursor: pointer; border: none;">Đóng</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        });
+    </script>
+</body>
+</html>
